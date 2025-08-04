@@ -72,7 +72,7 @@ server.get("/frases/:id", async (req, res) => {
     if (results.length > 0) {
       res.json(results[0]);
     } else {
-      res.status(404).json({ error: "Frase no encontrada" });
+      res.status(404).json({ error: "La frase no se encuentra" });
     }
   } catch (error) {
     res.status(500).json({ error: "Error al obtener la frase" });
@@ -97,11 +97,9 @@ server.post("/frases", async (req, res) => {
       capitulo_id,
     ]);
     await conn.end();
-    res
-      .status(201)
-      .json({ id: result.insertId, message: "Frase añadida correctamente" });
+    res.status(201).json({ id: result.insertId, message: "Frase añadida" });
   } catch (error) {
-    res.status(500).json({ error: "Error al insertar la frase" });
+    res.status(500).json({ error: "Error al añadir la frase" });
   }
 });
 
@@ -126,7 +124,7 @@ server.put("/frases/:id", async (req, res) => {
       fraseId,
     ]);
     await conn.end();
-    res.json({ message: "Frase actualizada correctamente" });
+    res.json({ message: "Frase actualizada" });
   } catch (error) {
     res.status(500).json({ error: "Error al actualizar la frase" });
   }
@@ -139,7 +137,7 @@ server.delete("/frases/:id", async (req, res) => {
     const conn = await getConnection();
     await conn.query("DELETE FROM frases WHERE id = ?", [fraseId]);
     await conn.end();
-    res.json({ message: "Frase eliminada correctamente" });
+    res.json({ message: "Frase borrada" });
   } catch (error) {
     res.status(500).json({ error: "Error al eliminar la frase" });
   }
